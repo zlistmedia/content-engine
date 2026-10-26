@@ -1,0 +1,50 @@
+{
+  "profile_version": 1,
+  "_note": "Example profile for a made-up business. Your own is built from your style guide during brand setup.",
+  "business": {
+    "name": "Saltbush Pottery",
+    "owner": "Mel Harris",
+    "website": "https://example.com",
+    "spelling": "en-AU",
+    "what_they_do": "Wheel-throwing classes and small-batch tableware."
+  },
+  "voice": {
+    "summary": "Calm, encouraging, a little dry. Short sentences. Talks about the making, not the selling.",
+    "rules": ["Australian English", "Short sentences", "No exclamation marks in captions", "Say 'clay', never 'medium'"],
+    "banned_words": ["hustle", "boss babe", "game-changer", "elevate", "journey", "unlock"],
+    "spelling_fixes": {"saltbush": "Saltbush", "mel": "Mel"},
+    "sample_lines": ["Centre the clay, then centre yourself.", "Wonky is a style. Cracked is a lesson."]
+  },
+  "look": {
+    "colours": {
+      "primary": "#2F3E36",
+      "accent": "#E8B04B",
+      "secondary": "#C9724B",
+      "light": "#F6F1E7"
+    },
+    "colour_names": {"primary": "Saltbush green", "accent": "Ochre", "secondary": "Terracotta", "light": "Bone"},
+    "never_pairs": [["accent", "secondary"]],
+    "fonts": {
+      "display": {"file": "fonts/DMSerifDisplay-Regular.ttf", "name": "DM Serif Display"},
+      "body": {"file": "fonts/Inter.ttf", "name": "Inter", "variation": "Bold"},
+      "label": {"file": "fonts/Inter.ttf", "name": "Inter", "variation": "SemiBold", "case": "upper"}
+    },
+    "logo": null,
+    "shorts": {
+      "hook": {"style": "pill", "font": "display", "text": "light", "band": "primary", "size": 84},
+      "captions": {"mode": "phrase", "font": "body", "size": 62, "fill": "primary", "card": "light", "stroke": "primary", "highlight": "accent", "highlight_text": "primary", "y": 1420},
+      "sticker": {"enabled": false},
+      "end_hold": 0.7,
+      "music": {"mode": "bed", "mood": "calm", "bpm": 84, "level": 0.18}
+    }
+  },
+  "offers": {
+    "free": {"name": "The first-class checklist", "url": "https://example.com/checklist"},
+    "entry": {"name": "Taster class", "price": "$65", "url": "https://example.com/taster"},
+    "warm_only": ["Six-week course"],
+    "never_mention": [],
+    "pitch_rules": ["Never pitch to camera"]
+  },
+  "platforms": {"shorts": ["Instagram Reels", "TikTok"], "scheduler": "Meta Business Suite"},
+  "review": {"reads_on": "phone", "plain_text_copy_in_reply": true}
+}

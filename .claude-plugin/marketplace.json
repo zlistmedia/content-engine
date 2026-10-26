@@ -1,0 +1,15 @@
+{
+  "name": "zlistmedia",
+  "owner": {"name": "Zoë Condon, Z List Media", "email": "zoe@zlistmedia.com.au", "url": "https://zlistmedia.com.au"},
+  "description": "Plugins by Z List Media for founders who want their content to keep getting found.",
+  "plugins": [
+    {
+      "name": "content-engine",
+      "displayName": "Content Engine",
+      "source": "./plugins/content-engine",
+      "description": "Turn one talking-to-camera video into three captioned Shorts in your own brand and voice, with a caption for each platform and a Ready to Post folder.",
+      "category": "content",
+      "tags": ["video", "shorts", "reels", "captions", "brand"]
+    }
+  ]
+}

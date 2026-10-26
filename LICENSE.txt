@@ -1,0 +1,5 @@
+Copyright (c) 2026 Zoë Condon, Z List Media. All rights reserved.
+
+You may install and use this plugin for your own business, including commercially for content you publish. You may not sell, sublicense, repackage or redistribute it, in whole or in part, without written permission.
+
+Third-party parts keep their own licences: faster-whisper and the Whisper model (MIT), the YuNet face model from OpenCV Zoo (MIT), the OpenCV Haar cascade (Intel licence), and the example fonts in plugins/content-engine/examples/sample-brand/fonts (SIL Open Font Licence, files included).
