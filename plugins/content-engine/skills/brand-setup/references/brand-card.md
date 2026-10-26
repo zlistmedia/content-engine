@@ -7,6 +7,10 @@ read and flags anything missing.
 
 **The page:** https://claude.ai/artifact/A3mYjSvnNzWAyv9Ysu7735
 
+The Brand Card link has to be shared publicly (anyone with the link can open it), or buyers can't
+open it. If an owner says the link asks them to sign in or says they don't have access, give them
+the document route below instead and suggest they let Z List Media know.
+
 What to tell an owner who hasn't done it yet:
 
 > Before we set up, fill in your Brand Card. It's one page and takes about 10 minutes:
@@ -25,5 +29,6 @@ What comes back:
   `Brand/brand-profile.json`, put the fonts in `Brand/fonts/` with the file names the profile
   lists, and fix any path that doesn't match.
 
-No web page possible (an offline owner, or someone who'd rather fill in a document):
-`style-guide-template.md` asks for the same things as a document to fill in and attach.
+No web page possible (the link won't open, an offline owner, or someone who'd rather fill in a
+document): `style-guide-template.md` asks for the same things as a Word or Google document to fill
+in and attach. Send it as a file they can open in Word, or paste it into the chat for them to copy.

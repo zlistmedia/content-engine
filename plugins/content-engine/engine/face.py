@@ -67,5 +67,7 @@ def locate(path, start=None, end=None, samples=14):
 
 if __name__ == "__main__":
     a = sys.argv
+    if len(a) < 2:
+        print(__doc__); sys.exit(1)
     r = locate(a[1], float(a[2]) if len(a) > 3 else None, float(a[3]) if len(a) > 3 else None)
     print(json.dumps(r))

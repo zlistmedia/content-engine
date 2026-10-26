@@ -50,14 +50,25 @@ def apply_fixes(words, fixes):
     norm = lambda w: re.sub(r"[^a-z0-9'-]", "", w.lower())
     singles = {k.lower(): v for k, v in (fixes or {}).items() if " " not in k.strip()}
     phrases = [(k.lower().split(), v) for k, v in (fixes or {}).items() if " " in k.strip()]
+    compact = lambda w: re.sub(r"[^a-z0-9]", "", w.lower())
     for parts, rep in sorted(phrases, key=lambda p: -len(p[0])):
-        n = len(parts)
-        for i in range(len(words) - n + 1):
-            if [norm(words[i + j]["w"]) for j in range(n)] == [norm(p) for p in parts]:
-                tail = re.sub(r"^.*?([.,!?;:]*)$", r"\1", words[i + n - 1]["w"])
-                words[i]["w"] = rep + tail; words[i]["e"] = words[i + n - 1]["e"]
-                for j in range(1, n):
-                    words[i + j]["w"] = ""
+        target = compact("".join(parts))
+        if not target:
+            continue
+        i = 0
+        while i < len(words):
+            # grow a window from word i until its letters match the phrase (however Whisper split or hyphenated it)
+            acc, j = "", i
+            while j < len(words) and len(acc) < len(target):
+                acc += compact(words[j]["w"]); j += 1
+            if acc == target and words[i]["w"]:
+                tail = re.sub(r"^.*?([.,!?;:]*)$", r"\1", words[j - 1]["w"])
+                words[i]["w"] = rep + tail; words[i]["e"] = words[j - 1]["e"]
+                for k in range(i + 1, j):
+                    words[k]["w"] = ""
+                i = j
+            else:
+                i += 1
     words = [x for x in words if x["w"]]
     for x in words:
         core = x["w"].strip(".,!?;:\"'")

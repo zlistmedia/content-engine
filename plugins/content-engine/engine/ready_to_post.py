@@ -6,7 +6,8 @@ Manifest (Claude writes it after Go Live is approved):
 {
   "title": "Video 03: How to get found on Google",
   "timezone": "Australia/Perth",
-  "out": "Ready to Post",
+  "out": "Ready to Post",                       # the parent folder; each job gets its own dated subfolder
+  "name": "Google",                             # short name for the subfolder (defaults to the title)
   "scheduler": "Meta Business Suite",          # what they told us they use (or "none yet")
   "posts": [
     {"date": "2026-10-28", "time": "19:40", "label": "Short 1 - Not one client",
@@ -19,12 +20,15 @@ Manifest (Claude writes it after Go Live is approved):
   ]
 }
 
-Makes:
+Makes (earlier weeks in Ready to Post are never touched; rebuilding the same job replaces only its own subfolder):
   Ready to Post/
-    Posting plan.html        open on phone or laptop: every post, when, where, captions with Copy buttons
-    schedule.csv             the same plan as a spreadsheet (works with bulk upload in most schedulers)
-    01 Tue 28 Oct 7.40pm - Short 1/   the video + one caption file per platform
-  Ready to Post.zip          the whole folder in one download
+    2026-10-28 Google/
+      Posting plan.html        open on phone or laptop: every post, when, where, captions with Copy buttons
+      schedule.csv             the same plan as a spreadsheet (works with bulk upload in most schedulers)
+      01 Tue 28 Oct 7.40pm - Short 1/   the video + one caption file per platform
+    2026-10-28 Google.zip      the job in one download. Only send it in chat if it's under 25 MB
+                               (the script says). Otherwise point them to the folder, or send the
+                               Posting plan and the files one at a time.
 """
 import csv, datetime as dt, html, json, os, re, shutil, sys, zipfile
 
@@ -49,12 +53,14 @@ def build(manifest_path):
     M = json.load(open(manifest_path, encoding="utf-8"))
     base = os.path.dirname(os.path.abspath(manifest_path))
     P = lambda p: p if os.path.isabs(p) else os.path.join(base, p)
-    out = P(M.get("out", "Ready to Post"))
+    posts = sorted(M["posts"], key=lambda p: (p["date"], p["time"]))
+    parent = P(M.get("out", "Ready to Post"))
+    short = slug(M.get("name") or M.get("title", "Week"))[:40].strip() or "Week"
+    out = os.path.join(parent, f"{posts[0]['date'] if posts else dt.date.today().isoformat()} {short}")
     if os.path.exists(out):
-        shutil.rmtree(out)
+        shutil.rmtree(out)          # this job's own subfolder only
     os.makedirs(out)
     rows, cards = [], []
-    posts = sorted(M["posts"], key=lambda p: (p["date"], p["time"]))
     for n, p in enumerate(posts, 1):
         x, nice = when(p["date"], p["time"])
         folder = slug(f"{n:02d} {nice} - {p['label']}")
@@ -124,4 +130,10 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print(__doc__); sys.exit(1)
     o, z, n = build(sys.argv[1])
-    print(f"Ready to Post: {n} posts in {o}\nZip: {z}")
+    mb = os.path.getsize(z) / 1e6
+    print(f"Ready to Post: {n} posts in {o}\nZip: {z} ({mb:.1f} MB)")
+    if mb < 25:
+        print("Small enough to send in chat.")
+    else:
+        print("Too big to send in chat. Point them to the folder (Drive or linked computer), or send the "
+              "Posting plan and each file on its own (split_video.py for any video over 25 MB, if the plugin has it).")

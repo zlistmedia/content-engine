@@ -4,7 +4,7 @@
 
 Plan format (Claude writes this after the owner approves The Plan):
 {
-  "brand":  "brand/brand-profile.json",
+  "brand":  "Brand/brand-profile.json",
   "source": "work/master.mp4",
   "words":  "work/words.json",
   "out_dir": "out",

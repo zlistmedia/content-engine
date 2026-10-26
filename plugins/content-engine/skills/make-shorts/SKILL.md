@@ -118,7 +118,9 @@ Here's the plan for your three Shorts.
 Reply OK to render, or tell me what to change (by number).
 ```
 
-Wait for a yes. "OK", "yes", "go" or "do it" counts.
+Wait for a yes. "OK", "yes", "go" or "do it" counts. The same rule holds at every check-in: a clear
+yes to that check-in, in this chat. Silence, a thumbs up to something else, or a yes to an earlier
+check-in never counts.
 
 ## 4. Render and check
 
@@ -167,8 +169,11 @@ without it.
 ## 7. Ready to Post
 
 Write the manifest (format in the `ready_to_post.py` docstring) with the approved times and
-captions. Run `ready_to_post.py`. Deliver:
-- the zip in the chat (and the folder to their Content Engine folder if it's linked or on Drive)
+captions. Run `ready_to_post.py`. It builds this week into its own dated subfolder of Ready to Post,
+so earlier weeks stay put. Deliver:
+- the folder to their Content Engine folder if it's linked or on Drive
+- the zip in the chat only when the script says it's under 25 MB. Otherwise send the Posting plan
+  and each Short on its own (each is well under the chat limit)
 - the Posting plan page: open `Posting plan.html` on any device to see every post, time and
   caption, with Copy buttons
 
@@ -178,6 +183,24 @@ Read `platforms.scheduler` in the profile first. Only if it's empty, ask where t
 `references/scheduling/README.md`) and save the answer. The first time, walk them through it one
 step at a time using the matching guide. After that, point to the Posting plan and offer help with
 any snags.
+
+## Saving progress, and picking up in a new chat
+
+Claude's workspace is wiped when a chat ends, and long jobs sometimes run past one chat. So at every
+check-in, save the job's state where the next chat can find it:
+
+- With a Content Engine folder (Drive or linked computer): copy `shorts-plan.json`, `work/words.json`,
+  `work/transcript.txt`, the manifest or approved captions so far, and a `job-state.json` into
+  `Content Engine/Jobs/<date> <short name>/`. `job-state.json` is one small file: the video's name and
+  where it lives, which check-ins are approved, and what's next, e.g.
+  `{"video": "Inbox/video-03.mp4", "approved": ["plan", "cut"], "next": "the words"}`.
+- Chat only: after each approval, send one file, `Pick up <short name>.zip` (those same files), and say:
+  "If this chat ends, start a new one, say pick up my Shorts, and attach this file and your video."
+
+When a chat opens with "pick up my Shorts", "carry on" or that file: do Step 0, unpack the job into
+the workspace, re-make the working copy (`footage.py prep`, fast for clean footage), and skip the
+transcription because `words.json` is already there. Then tell them in one line where it's up to and
+carry on from the next check-in. Never redo an approved step without asking.
 
 ## When something goes wrong
 

@@ -342,6 +342,10 @@ class Brand:
 
 if __name__ == "__main__":
     import sys
+    if len(sys.argv) < 2:
+        print("Check a brand profile and, optionally, save a swatch sheet of its colours.\n\n"
+              "  python brand.py <brand-profile.json> [--swatches swatches.png]")
+        sys.exit(1)
     b = Brand(sys.argv[1])
     if "--swatches" in sys.argv:
         print(b.swatches(sys.argv[sys.argv.index("--swatches") + 1]))
