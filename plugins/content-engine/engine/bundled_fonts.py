@@ -20,8 +20,8 @@ def _index():
         if not fn.endswith(".ttf"):
             continue
         base = fn[:-4]
-        if "[" in base:  # variable font: Family[axes]
-            fams.setdefault(_key(base.split("[")[0]), {})["variable"] = fn
+        if base.endswith("-Variable"):  # variable font: one file holds every weight
+            fams.setdefault(_key(base[: -len("-Variable")]), {})["variable"] = fn
         else:
             fam, _, w = base.rpartition("-")
             fams.setdefault(_key(fam), {})[w] = fn
