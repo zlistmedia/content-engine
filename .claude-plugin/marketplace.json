@@ -7,7 +7,7 @@
       "name": "content-engine",
       "displayName": "Content Engine",
       "source": "./plugins/content-engine",
-      "description": "Turn one talking-to-camera video into three captioned Shorts in your own brand and voice, with a caption for each platform and a Ready to Post folder.",
+      "description": "Turn one talking-to-camera video into three short Reels and a 60-second story in your own brand and voice, with a caption for each platform and a Ready to Post folder.",
       "category": "content",
       "tags": ["video", "shorts", "reels", "captions", "brand"]
     }

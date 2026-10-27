@@ -1,6 +1,6 @@
 # Content Engine by Z List Media
 
-One video of you talking to camera goes in. Three Shorts come out, captioned in your colours, your fonts and your words, with a caption for each platform and a folder that tells you what to post where and when.
+One video of you talking to camera goes in. Three short Reels and a 60-second story come out, captioned in your colours, your fonts and your words, with a caption for each platform and a folder that tells you what to post where and when.
 
 ## Add it to Claude
 
