@@ -34,8 +34,11 @@ Each new chat starts with an empty workspace, so do this every time, before anyt
 2. Find their whole `Brand` folder: in their Content Engine folder (linked computer or Drive), or
    in the chat's attachments. Copy all of it into the job folder in Claude's workspace, keeping
    its subfolders: `brand-profile.json`, `fonts/` and the logo. Font paths in the profile are
-   relative to it, so the profile alone won't render. No Content Engine folder? Ask them to attach
-   their brand profile and their font files.
+   relative to it, so the profile alone won't render. No folder, but the chat is in their
+   Content Engine Project? Their brand profile is in the Project's files: write it out as
+   `brand-profile.json` in the job folder, exactly as it is. Fonts named in it that the engine
+   bundles need no file. For any other font, ask them to attach the file, or to add it to the
+   Project's files. Neither? Ask them to attach their brand profile and font files.
 3. Run `brand.py <profile>` and sort anything it flags with them.
 
 No profile means no brand: stop and run the `brand-setup` skill first (it starts with their Brand

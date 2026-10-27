@@ -38,8 +38,36 @@ class Brand:
         look = self.p["look"]
         self.colours = {k: rgba(v) for k, v in look["colours"].items()}
         self.fonts = look["fonts"]
+        self.bundled = self._use_bundled_fonts()
         self.shorts = look.get("shorts", {})
         self.never_pairs = [tuple(x) for x in look.get("never_pairs", [])]
+
+    def _use_bundled_fonts(self):
+        """Font named but its file missing? Use the free copy that ships with the engine, if we have it."""
+        try:
+            import bundled_fonts
+        except ImportError:
+            return []
+        used = []
+        for role, f in list(self.fonts.items()):
+            if not isinstance(f, dict):
+                f = {"file": f}
+            p = f.get("file") or ""
+            p = p if os.path.isabs(p) else os.path.join(self.root, p)
+            if p and os.path.isfile(p):
+                continue
+            name = f.get("name") or os.path.splitext(os.path.basename(p))[0]
+            hit = bundled_fonts.resolve(name, role, f.get("weight"))
+            if not hit:
+                continue
+            path, var = hit
+            nf = dict(f, file=path, bundled=True)
+            nf.pop("file_missing", None)
+            if var and not f.get("variation"):
+                nf["variation"] = var
+            self.fonts[role] = nf
+            used.append(f"{role}: {name}" + (f" {var}" if var else ""))
+        return used
 
     # ---------- lookups ----------
     def c(self, role, a=255):
@@ -350,4 +378,6 @@ if __name__ == "__main__":
     if "--swatches" in sys.argv:
         print(b.swatches(sys.argv[sys.argv.index("--swatches") + 1]))
     pr = b.validate()
+    if b.bundled:
+        print("Using the engine's own copy of: " + "; ".join(b.bundled) + " (no file needed)")
     print("Brand profile OK" if not pr else "Sort these first:\n- " + "\n- ".join(pr))

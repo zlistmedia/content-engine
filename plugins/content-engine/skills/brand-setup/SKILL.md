@@ -56,9 +56,9 @@ Work out where it lives, in this order:
 1. **A folder on their computer**, if this chat is linked to it (the desktop app). Ask them to create
    or choose a folder called Content Engine and give access to it.
 2. **Google Drive**, if the Drive connector is on. Make the folders there.
-3. **Neither:** they attach files to the chat, and you send the brand profile back as a file for
-   them to keep. Tell them to attach the profile **and their font files** at the start of each new
-   chat, because a new chat starts with an empty workspace.
+3. **Neither:** their home is a **Claude Project called "Content Engine"**, made in Step 7. Its files
+   hold the brand profile, so every chat inside it starts with their brand. Videos go in as
+   attachments, and finished content comes back as files.
 
 ## Step 2: The workspace check
 
@@ -99,8 +99,12 @@ profile.
   colour). If a guide gives only swatches, sample the hex from the image. Either way, show them
   `brand.py <profile> --swatches <out.png>` next to their own guide and ask "Do these match?",
   because most owners can't check a hex code by eye. Note any "never use X on Y" rule as `never_pairs`.
-- **Fonts:** names and roles (headline, body, label or accent). The font files are needed, because
-  fonts get drawn into the video. Ask for the files (.ttf or .otf). If they only know the name:
+- **Fonts:** names and roles (headline, body, label or accent). Fonts get drawn into the video, so
+  the engine needs the actual font. **First check the engine's own copies:** run
+  `bundled_fonts.py` for the list. Popular free Google Fonts ship with the engine (Poppins, Inter,
+  Montserrat, Lato, Open Sans, DM Sans, Raleway, Playfair Display and more), so if theirs is on the
+  list, they don't need a file at all: `brand.py` picks it up from the name and says so. Only ask for
+  files (.ttf or .otf) for fonts that aren't on the list. If they only know the name:
   - Check Google Fonts first: many Canva fonts are Google Fonts and free to download. Send the link
     to that font's page and tell them to tap "Get font", then "Download all".
   - Bought fonts (Fontshare, Creative Market, a designer): the files are in their download or
@@ -146,11 +150,33 @@ Apply their changes to the profile and re-render. Repeat until they say it's rig
 
 ## Step 7: Save and hand over
 
-Save `brand-profile.json` (and fonts and logo) to `Content Engine/Brand/`, and send a copy of the
-profile as a file. Close with what's next, in two lines:
+Save `brand-profile.json` (and any font files and logo) to `Content Engine/Brand/` if they have that
+folder. Then set them up so they never repeat this, in this order, one step per message:
+
+1. **Their files.** Send three files:
+   - `brand-profile.json`: the profile itself.
+   - `My brand.md`: a one-page summary in plain words (who they are, colours with names and hex
+     codes, fonts, caption and hook style, voice rules, banned words, offers, posting days). This is
+     for them to read, and it also lets Claude read their brand in any chat.
+   - Any font files they gave you that aren't bundled (say which, or say none are needed).
+2. **Their Project instructions.** Send this as plain text in the message, filled in, ready to copy:
+
+   > This Project is my Content Engine. Every chat here makes content for {{business name}} using
+   > the Content Engine plugin. My brand profile and brand summary are in this Project's files. At
+   > the start of each chat, rebuild brand-profile.json from the Project file exactly as it is, and
+   > never pick a colour, font or word that isn't in it. {{Spelling, e.g. Australian English}}.
+
+3. **Make the Project.** Walk them through it, waiting for a reply after each step:
+   - "On claude.ai, open **Projects** in the left menu, then **New project**. Call it Content Engine."
+   - "In the Project, find **Instructions**, paste in the text above, and save."
+   - "Under **Files**, add `brand-profile.json` and `My brand.md`" (and their font files, if any).
+   - "Open a new chat inside the Project and say hi, so we know it's working."
+   If they're in the desktop app with a linked Content Engine folder, the Project is optional: say so
+   and skip it if they'd rather not.
+4. **What's next**, in two lines:
 
 > Your brand's set. Film 5 to 10 minutes talking to camera about one question your clients ask,
-> drop it in your Inbox folder, and say "make my Shorts".
+> then open a chat in your Content Engine Project, attach it, and say "make my Shorts".
 
 ## When they change something later
 
