@@ -27,20 +27,21 @@ empty, then save their answer there so you never ask again.
 ## Every week after that
 
 The Posting plan page in the folder lists each post with its time and captions and a Copy button.
-The rhythm for one video's three Shorts:
+The rhythm for one video's four Reels (the 60-second story goes last, a week out):
 
 | When | What |
 |---|---|
 | Day 1 (the day the main video goes out, or any day they choose) | Short 1 |
 | Day 3 | Short 2 |
 | Day 5 or 6 | Short 3 |
+| Day 7 or 8 | The 60-second story |
 
 Use their own posting times if they have them. Otherwise suggest 7.30 to 8pm local time, at odd
 minutes (7.38pm, not 7.30pm).
 
 ## Prompts they can copy (put these in the Posting plan or the reply when useful)
 
-- "Open Meta Business Suite with me and help me schedule the three Shorts in my Ready to Post folder."
+- "Open Meta Business Suite with me and help me schedule the four Reels in my Ready to Post folder."
 - "I'm stuck on the YouTube Studio Visibility step. What do I click?"
 - "Make my schedule.csv match Buffer's bulk upload format."
 - "Move Short 2 to Friday and give me the new caption file."

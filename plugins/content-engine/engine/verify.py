@@ -5,7 +5,7 @@
 Checks:
   - every word made it in (re-transcribes the render and compares with the plan)
   - the last word isn't clipped
-  - length is 10 to 60 seconds, file is under 30 MB (else makes a smaller copy)
+  - length suits the Reel (20 to 45 s short, 50 to 70 s story cut), file is under 30 MB (else makes a smaller copy)
   - no banned words in the on-screen text
   - saves a contact sheet (six frames) so Claude can look at framing, captions and colour
 """
@@ -73,8 +73,11 @@ def verify(path, brand=None, model="small"):
               "size": f"{info['width']}x{info['height']}", "problems": [], "notes": []}
     if (info["width"], info["height"]) != (1080, 1920):
         report["problems"].append(f"Frame is {info['width']}x{info['height']}, not 1080x1920.")
-    if not 10 <= info["duration"] <= 60:
-        report["notes"].append(f"Runs {info['duration']:.0f} s. Shorts work best between 15 and 45 s.")
+    story = os.path.basename(path).startswith("story")
+    lo, hi = (45, 75) if story else (15, 50)
+    if not lo <= info["duration"] <= hi:
+        want = "50 to 70 s for the story cut" if story else "20 to 45 s for a short Reel"
+        report["notes"].append(f"Runs {info['duration']:.0f} s. Aim for {want}.")
     if info["size_mb"] > LIMIT_MB:
         shrink(path)
         report["notes"].append(f"Was {info['size_mb']} MB, made a smaller copy ({U.video_info(path)['size_mb']} MB).")

@@ -1,11 +1,18 @@
 {
   "name": "content-engine",
-  "version": "0.2.2",
-  "description": "Level 1 (free): turn one talking-to-camera video into three captioned Shorts/Reels in your own brand and voice, with captions for each platform and a Ready to Post folder.",
+  "version": "0.3.0",
+  "description": "Starter (free): turn one talking-to-camera video into three short Reels and a 60-second story cut in your own brand and voice, with captions for each platform and a Ready to Post folder.",
   "author": {
     "name": "Zoë Condon, Z List Media",
     "email": "zoe@zlistmedia.com.au"
   },
   "homepage": "https://zlistmedia.com.au",
-  "keywords": ["video", "shorts", "reels", "captions", "content", "brand"]
+  "keywords": [
+    "video",
+    "shorts",
+    "reels",
+    "captions",
+    "content",
+    "brand"
+  ]
 }

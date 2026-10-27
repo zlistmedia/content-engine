@@ -28,7 +28,7 @@ Made by Zoë Condon, Z List Media.
 3. Film. Put the video in your Content Engine > Inbox folder in Google Drive.
 4. Say **"make my Shorts"**. Claude checks in with you four times along the way:
    - **The Plan:** the three moments and hooks
-   - **The Cut:** the three Shorts to watch on your phone
+   - **The Cut:** the four Reels (three short, one 60-second story) to watch on your phone
    - **The Words:** the captions for each platform
    - **Go Live:** what's going where and when
 5. Post from your Ready to Post folder. The first time, Claude walks you through scheduling in

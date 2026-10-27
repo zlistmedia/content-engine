@@ -1,4 +1,4 @@
-# Picking the three moments
+# Picking the moments: three short Reels and a 60-second story
 
 Read the whole transcript first. The filmed order is not the order it has to go in, and the best
 Short is often halfway through.
@@ -10,9 +10,24 @@ Short is often halfway through.
   "and" or a warm-up. If the strong line comes a sentence in, start there.
 - **Lived experience, then the lesson.** A real moment from their business beats a tip with no story.
 - **Ends on a full stop.** The last sentence lands a point, not "anyway" or a trailing "so yeah".
-- **15 to 45 seconds.** Under 15 rarely makes a point. Over 45 loses people.
+- **20 to 45 seconds for the short ones.** Under 20 rarely makes a full point, so extend the run to
+  finish the thought rather than shipping a 10-second clip. Over 45 loses people.
 - **Three different angles.** Not three versions of the same point: for example the problem, the
   shift, the first step.
+
+## The 60-second story
+
+After the three short ones, build one longer Reel: the story cut. It tells the whole idea of the
+video in about a minute, for people who will never watch the long version.
+
+- **50 to 70 seconds.** Built from two to four runs anywhere in the video, in the order that makes
+  the best story, not the filmed order.
+- **Hook, point, payoff.** Open on the sharpest question or claim, give the one idea and the reason
+  for it (a real moment or number if they said one), and end on what to do or think next.
+- **It can reuse a line from a short Reel**, but it must not be a short Reel stretched longer.
+- In `shorts-plan.json` give it the id `story` so the checks treat it as the long one.
+- Under about three minutes of talking, or only one real point in the video: skip the story cut and
+  say why. Never pad it to reach a minute.
 
 ## Not enough for three
 

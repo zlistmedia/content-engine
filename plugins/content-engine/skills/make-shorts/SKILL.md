@@ -1,20 +1,20 @@
 ---
 name: make-shorts
-description: Level 1 of the content engine. Turns one raw talking-to-camera video into three captioned vertical Shorts/Reels in the owner's brand, with captions for each platform and a Ready to Post folder. Use for "make my Shorts", "make Reels from this video", "run the engine", "edit this video", or any raw video dropped in for content.
+description: Level 1 of the content engine. Turns one raw talking-to-camera video into three short captioned vertical Reels plus a 60-second story cut in the owner's brand, with captions for each platform and a Ready to Post folder. Use for "make my Shorts", "make Reels from this video", "run the engine", "edit this video", or any raw video dropped in for content.
 ---
 
 # Content Engine, Level 1: Shorts
 
-One raw video in. Three Shorts out, in their brand, in their voice, ready to post. Nothing past a
+One raw video in. Three short Reels and a 60-second story out, in their brand, in their voice, ready to post. Nothing past a
 check-in gets built until the owner says yes, so every change is cheap.
 
 ```
 Raw video
   1. Get the video in, check it, make a clean working copy
   2. Transcribe with word timings
-  3. Pick three moments, write three hooks
+  3. Pick three short moments and a 60-second story, write the hooks
      ── CHECK-IN 1 · THE PLAN ──
-  4. Render the three Shorts, check them
+  4. Render the four Reels, check them
      ── CHECK-IN 2 · THE CUT ──
   5. Write the captions for each platform
      ── CHECK-IN 3 · THE WORDS ──
@@ -94,9 +94,9 @@ come out right. Read all of `transcript.txt` and `retakes.txt` before picking an
 or term is still wrong, add it to the profile's `spelling_fixes` (one word or a phrase like
 "chat gbt": "ChatGPT") so it's right forever, then run `voice_check.py <profile> transcript.txt`.
 
-## 3. Pick three moments
+## 3. Pick three moments and the story cut
 
-Full method in `references/picking-moments.md`. In short: 15 to 45 seconds each, each one makes a
+Full method in `references/picking-moments.md`. In short: three Reels of 20 to 45 seconds plus one 50 to 70 second story cut (id `story`). Each short one makes a
 single point that works with no other context, opens strong, ends on a full stop. Skip retakes.
 Cut only at sentence boundaries.
 
@@ -109,11 +109,12 @@ profile has stickers on. Run `voice_check.py` on the plan so no hook breaks thei
 One short message, laid out for a phone:
 
 ```
-Here's the plan for your three Shorts.
+Here's the plan for your four Reels.
 
 1. "<hook line>"  (0:42, starts: "<first words>...")
 2. "<hook line>"  (0:31, starts: "...")
 3. "<hook line>"  (0:28, starts: "...")
+4. Story, 60 sec: "<hook line>"  (1:02, built from 3 moments)
 
 Reply OK to render, or tell me what to change (by number).
 ```
