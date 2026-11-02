@@ -20,6 +20,11 @@ How to download it in the workspace: take the file ID from the link (`/d/<ID>/`)
 Check the size matches what Drive shows. If the download comes back as a small HTML page, the
 link isn't public yet: ask them to check step 2.
 
+If the download fails with a network error or a 403, Claude's settings are blocking Google's download
+address. Give them the same fix as the voice model: Settings, then Capabilities, set the domain
+allowlist to "All domains", then a new chat. If they'd rather not, they can download the video to
+their computer and use Route 2 (fine up to about 400 MB), or send just the audio and a photo.
+
 If the Drive connector is on, find the file there first to get its ID and exact size.
 
 ## Route 2: their computer (desktop app, chat linked to the computer)

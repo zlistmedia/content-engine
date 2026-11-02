@@ -54,7 +54,9 @@ Content Engine/
 
 Work out where it lives, in this order:
 1. **A folder on their computer**, if this chat is linked to it (the desktop app). Ask them to create
-   or choose a folder called Content Engine and give access to it.
+   or choose a folder called Content Engine and give access to it. If the request to open a folder is
+   blocked or nothing happens, don't keep retrying: ask them to make a folder called Content Engine
+   themselves (Documents is fine), then add it to this chat with the desktop app's folder button.
 2. **Google Drive**, if the Drive connector is on. Make the folders there.
 3. **Neither:** their home is a **Claude Project called "Content Engine"**, made in Step 7. Its files
    hold the brand profile, so every chat inside it starts with their brand. Videos go in as
@@ -65,6 +67,13 @@ Work out where it lives, in this order:
 Run `setup_check.py`. If anything is missing, tell them in one message what it is, that it goes in
 Claude's workspace and not on their computer, and roughly how big it is (the script prints both).
 Ask "OK to install these?" and wait for a yes. Then run `setup_check.py --install`.
+
+If it prints `"voice_model": "blocked"`, the transcription model can't download because Claude's
+network settings block huggingface.co. Nobody works this out alone, so give them the fix exactly as
+the script prints it (Settings, then Capabilities, set the domain allowlist to "All domains" or add
+huggingface.co, then a new chat), and carry on with the brand steps while they do it.
+
+This plugin runs in Claude. If they ask about ChatGPT or another AI app, say it isn't supported.
 
 ## Step 3: Their Brand Card
 
@@ -86,8 +95,8 @@ that in Step 4. A `"_made_with"` field is just a marker and can stay.
 ## Step 4: Fill the gaps
 
 Read the card for anything missing or unclear (the page flags most of it, but check), and ask about
-only those, in one numbered message, five questions at most. Typical gaps: a font file, their free
-thing's link, the days they post, names the captions might get wrong (their name, business, suburb,
+only those, in one numbered message, five questions at most. Typical gaps: a font file, the link for
+where captions send people, the days they post, names the captions might get wrong (their name, business, suburb,
 products).
 
 Whatever you fill in or check, these are the rules for each field (full field list in
@@ -118,6 +127,11 @@ profile.
 - **Voice:** tone, words they use, words they never use, spelling (Australian, US, UK), names and
   brand terms to spell exactly, anything they never say. Their own sample lines from posts or
   emails are gold: ask for three if the guide has none.
+- **Where captions send people** (`offers.cta`): a free download, a paid starter offer, a call, a
+  website page, or just "follow". Not everyone has a free offer, and that's fine. Never hold setup up
+  for one or suggest they need one. Older cards with only a free offer work as they are.
+- **More than four colours:** the four roles drive the video. Keep the rest from
+  `look.other_colours` in `My brand.md` so they're on file for graphics.
 - **Rules:** minimum sizes, logo placement, colours that must never touch.
 
 ## Step 5: Check the look, by picture
@@ -125,6 +139,14 @@ profile.
 The card already holds their caption style, hook style and music, chosen against a live preview.
 Write any changes into the profile, keeping every colour field in `look.shorts` explicit. Run
 `brand.py` and sort anything it flags with them, including a font weight that isn't in the file.
+
+Two font problems to catch here, before the test clip:
+- **Missing numbers or symbols.** If `brand.py` says a font has no glyph for some characters, or the
+  preview shows boxes or odd symbols, that font would break on the first price or date. Swap that
+  role to the closest bundled font, say plainly it's a stand-in, and show the preview again.
+- **A doubled-up shadow.** Some display fonts carry their own shadow or outline. The engine skips its
+  shadow for fonts named that way, but if the preview still shows two shadows, set
+  `"built_in_effect": true` on that font in the profile and re-render.
 
 Ask for a photo of themselves (a selfie is fine) and render `look_preview.py` with it, so they see
 the look drawn by the engine itself in their real font files. If they want to compare, show two
@@ -148,10 +170,16 @@ background so they still see the look. Send the clip with three questions:
 
 Apply their changes to the profile and re-render. Repeat until they say it's right.
 
+If a title or hook covers their face, there isn't enough headroom in the shot. The engine moves it
+below the face when it can. Suggest they leave a little more space above their head when filming.
+
+As soon as they say it's right, go straight into Step 7. Don't wait for them to ask "what's next?"
+
 ## Step 7: Save and hand over
 
 Save `brand-profile.json` (and any font files and logo) to `Content Engine/Brand/` if they have that
-folder. Then set them up so they never repeat this, in this order, one step per message:
+folder. Then set them up so they never repeat this, in this order, one step per message. Start this
+straight after they approve the test clip, without being asked:
 
 1. **Their files.** Send three files:
    - `brand-profile.json`: the profile itself.
@@ -173,12 +201,28 @@ folder. Then set them up so they never repeat this, in this order, one step per 
    - "Open a new chat inside the Project and say hi, so we know it's working."
    If they're in the desktop app with a linked Content Engine folder, the Project is optional: say so
    and skip it if they'd rather not.
-4. **What's next**, in two lines:
+4. **What's next.** Send this as one short message they can screenshot or save. It's the line
+   they'll use every time from now on:
 
-> Your brand's set. Film 5 to 10 minutes talking to camera about one question your clients ask,
-> then open a chat in your Content Engine Project, attach it, and say "make my Shorts".
+> Your brand's set. Here's how to make content from now on:
+> 1. Film 5 to 10 minutes talking to camera about one question your clients ask.
+> 2. Open your **Content Engine** Project and start a new chat.
+> 3. Attach the video (or share its Google Drive link) and say "make my Shorts".
+>
+> Big video? If it's over about 400MB and lives in Google Drive, download it to your computer first
+> and attach it from there, or send just the audio and a photo of you.
 
 ## When they change something later
 
 "Make the captions bigger", "we've changed our yellow", "never say hustle": update the profile,
 re-run `brand.py`, show a fresh `look_preview.py` still, and save. Their edits are the profile.
+
+Changes always go through the profile, never by editing the plugin's own files: those get replaced
+with every update, so anything changed there is lost.
+
+When they're unsure how to ask for a change, offer a few they can copy:
+- "Make the captions bigger and move them up a little."
+- "Use my accent colour for the highlighted word."
+- "The hook is covering my face. Move it below."
+- "Shorter captions, two or three words at a time."
+- "Swap the headline font for something bolder."

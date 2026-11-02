@@ -51,7 +51,7 @@ Attach a PNG with a clear background, if you have one.
 
 ## Offers
 
-- Your free thing and its link:
+- Where captions should send new people (a free download, a paid starter offer, a call, your website, or just "follow me"), with its link:
 - Your entry offer, its price and link:
 - Offers you only mention to people who already know you:
 - Old offers to never mention:

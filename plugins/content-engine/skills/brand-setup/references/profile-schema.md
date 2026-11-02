@@ -42,12 +42,17 @@ folder. A full worked example is in `examples/sample-brand/brand-profile.json` a
     }
   },
   "offers": {
+    "cta":   {"type": "free|entry|call|website|follow", "name": "...", "url": "...", "price": "..."},
     "free":  {"name": "...", "url": "..."},
     "entry": {"name": "...", "price": "...", "url": "..."},
     "warm_only": ["offers only mentioned to people who already know them"],
     "never_mention": ["retired offers"],
     "pitch_rules": ["Never pitch to camera"]
   },
+  // offers.cta is the one place captions, blogs, emails and end cards send new people. It can be a
+  // free download, a paid starter offer, a call, a website page, or "follow" (no link). Not everyone
+  // has a free offer, and that's fine: never block setup on it. Older profiles without cta fall back
+  // to offers.free, then offers.entry, then follow (brand.next_step does this).
   "platforms": {"shorts": ["Instagram Reels", "YouTube Shorts"], "scheduler": "what they use, or 'phone'",
                 "cadence": "their posting days and times, e.g. 'Tue and Thu 7.40pm, Sun 8am'"},
   "review": {"reads_on": "phone", "plain_text_copy_in_reply": true}

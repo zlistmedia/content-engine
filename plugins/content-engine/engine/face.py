@@ -65,6 +65,36 @@ def locate(path, start=None, end=None, samples=14):
             "frames": len(cxs), "spread_px": round(float(np.std(cxs)), 1) if cxs else None}
 
 
+def vertical_band(path, start=None, end=None, samples=6, out_w=1080, out_h=1920, crop=None):
+    """Where the main face sits up and down in the finished 9:16 frame: (top, bottom) in output pixels.
+
+    Used to keep the hook off the speaker's face. Returns None if no face is found."""
+    info = U.video_info(path)
+    W, H = info["width"], info["height"]
+    s = start if start is not None else 0.5
+    e = end if end is not None else max(s + 1, info["duration"] - 0.5)
+    sw = 640; sh = int(round(H * sw / W))
+    find = detector(sw, sh)
+    tops, bots = [], []
+    for t in np.linspace(s, e, samples):
+        g = grab(path, t, sw, sh)
+        if g is None:
+            continue
+        fs = find(g)
+        if len(fs):
+            x, y, fw, fh = max(fs, key=lambda f: f[2] * f[3])
+            # from the brows to the chin: covering hair or forehead is fine, covering eyes or mouth is not
+            tops.append((y + fh * 0.15) * H / sh); bots.append((y + fh * 0.95) * H / sh)
+    if not tops:
+        return None
+    top, bot = float(np.median(tops)), float(np.median(bots))
+    if crop and not crop.get("portrait"):
+        scale = out_h / H; off = 0.0
+    else:
+        scale = max(out_w / W, out_h / H); off = (H * scale - out_h) / 2
+    return int(max(0, top * scale - off)), int(min(out_h, bot * scale - off))
+
+
 if __name__ == "__main__":
     a = sys.argv
     if len(a) < 2:

@@ -135,6 +135,10 @@ the owner sees it:
 - No face found, or the wrong person: look at the contact sheet. Set `crop_x` for that Short in
   the plan (the left edge of the vertical crop, in source pixels; the docstring has an example), or
   ask them which side of the frame they sat on.
+- "hook moved below the face" or "moved up, above the head": the engine kept the hook off their
+  face. Check it still reads well. "hook covers the face: there's no headroom": the shot is too
+  tight. Try a two-line hook in a smaller size, or tell them to leave more space above their head
+  next time.
 
 Look at every contact sheet yourself: hook readable, captions on brand and clear of the face, no
 text off the edge, colours right. Render Short 1 first if it's their first run, so they can steer
@@ -144,13 +148,16 @@ the look before you render the rest.
 
 Send each Short (files under 30 MB go straight into the chat), plus the phone checklist from
 `references/phone-checklist.md` and the notes card from `references/giving-notes.md` the first
-time. Change exactly what they flag, re-render only those, resend only those.
+time. Change exactly what they flag, re-render only those, resend only those. If they'd like
+changes but aren't sure how to put it, offer a few they can copy: "make the captions bigger",
+"use my accent colour for the highlighted word", "move the hook below my face", "two or three
+words at a time".
 
 ## 5. Captions for each platform
 
 Write per `references/platform-captions.md`, in their voice: Instagram, YouTube (title and
-description), TikTok and Facebook, only for the platforms in their profile. Their free thing goes
-in Instagram and YouTube. Warm-only offers never go in. Write the captions into the manifest, run
+description), TikTok and Facebook, only for the platforms in their profile. Their next step (`offers.cta`)
+goes in Instagram and YouTube. Warm-only offers never go in. Write the captions into the manifest, run
 `voice_check.py`, and fix everything it finds before showing them. Then read each caption against
 the rest of their voice rules yourself: the script only checks what a script can.
 

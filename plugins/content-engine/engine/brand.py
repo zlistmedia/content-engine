@@ -30,6 +30,42 @@ def contrast(a, b):
     return (la + 0.05) / (lb + 0.05)
 
 
+CTA_BUTTON = {"free": "Get the free {name}", "entry": "{name}", "call": "{name}", "website": "{name}",
+              "follow": "Follow for more"}
+CTA_DEFAULT_NAME = {"free": "free guide", "entry": "Start here", "call": "Book a call", "website": "Visit the website"}
+
+
+def next_step(p):
+    """Where captions, blogs, emails and end cards send new people.
+
+    Reads offers.cta (set on the Brand Card). Older profiles without it fall back to the free
+    offer, then the entry offer, then 'follow'. Returns type, name, url and a short button label.
+    """
+    o = p.get("offers", {}) or {}
+    c = o.get("cta") or {}
+    t, name, url = c.get("type"), (c.get("name") or "").strip(), (c.get("url") or "").strip()
+    if not t:
+        free, entry = o.get("free") or {}, o.get("entry") or {}
+        if free.get("name") or free.get("url"):
+            t, name, url = "free", free.get("name", ""), free.get("url", "")
+        elif entry.get("name") or entry.get("url"):
+            t, name, url = "entry", entry.get("name", ""), entry.get("url", "")
+        else:
+            t, name, url = "follow", "", ""
+    if t == "website" and not url:
+        url = (p.get("business", {}) or {}).get("website", "")
+    label_name = name or CTA_DEFAULT_NAME.get(t, "")
+    button = name if (name and t != "free") else CTA_BUTTON.get(t, "{name}").format(name=label_name)
+    if t == "free" and name:
+        button = name
+    return {"type": t, "name": name, "url": url, "button": button, "price": c.get("price", "")}
+
+
+# Fonts that already carry their own shadow, outline or 3D layer. Adding the engine's drop
+# shadow on top doubles it up, so these skip it.
+DECORATIVE = re.compile(r"shadow|shade|3d|extrude|outline|inline|layered|double", re.I)
+
+
 class Brand:
     def __init__(self, path):
         self.path = os.path.abspath(path)
@@ -41,6 +77,17 @@ class Brand:
         self.bundled = self._use_bundled_fonts()
         self.shorts = look.get("shorts", {})
         self.never_pairs = [tuple(x) for x in look.get("never_pairs", [])]
+
+    def next_step(self):
+        return next_step(self.p)
+
+    def decorative(self, role):
+        """True when the font already has its own shadow or outline, so the engine adds none."""
+        f = self.fonts.get(role, {})
+        if isinstance(f, dict) and "built_in_effect" in f:
+            return bool(f["built_in_effect"])
+        name = (f.get("name") if isinstance(f, dict) else "") or os.path.basename(self.font_path(role))
+        return bool(DECORATIVE.search(name or ""))
 
     def _use_bundled_fonts(self):
         """Font named but its file missing? Use the free copy that ships with the engine, if we have it."""
@@ -168,6 +215,8 @@ class Brand:
         style = s.get("style", "band")
         lines = [self.case(role, l) for l in lines]
         txt, bg, drop = s.get("text", "light"), s.get("band", "primary"), s.get("drop")
+        if self.decorative(role):
+            drop = None
         if style != "plain":
             self.check_pair(txt, bg)
         track = self.tracking(role)
@@ -237,6 +286,8 @@ class Brand:
                 break
             size -= 4
         pad, sh = 24, s.get("shadow_offset", 8)
+        if self.decorative(role):
+            sh = 0
         im = Image.new("RGBA", (w + pad * 2 + sh, h + pad * 2 + sh), (0, 0, 0, 0))
         d = ImageDraw.Draw(im)
         x, y = pad - b[0], pad - b[1]
@@ -309,9 +360,10 @@ class Brand:
                 continue
             try:
                 fnt = self.font(role, 40, strict=True)
-                for ch in "AaZz09?!'":
-                    if fnt.getbbox(ch)[2] <= 0:
-                        probs.append(f"Font for '{role}' has no '{ch}' glyph")
+                missing = [ch for ch in "AaZz0123456789?!'$%&" if not self._has_glyph(fnt, ch)]
+                if missing:
+                    probs.append(f"Font for '{role}' has no glyph for {' '.join(missing)} "
+                                 "(these would show as boxes or odd symbols). Swap to a similar bundled font.")
             except Exception as e:
                 probs.append(f"Font for '{role}' won't load: {e}")
         for sect in ("hook", "captions", "sticker"):
@@ -348,6 +400,28 @@ class Brand:
                     probs.append(f"{what}: the guide says never pair {fg} and {bg}.")
         return probs
 
+
+    @staticmethod
+    def _has_glyph(fnt, ch):
+        """A character the font lacks draws as its 'missing' box. Compare against that box."""
+        try:
+            from fontTools.ttLib import TTFont
+            path = getattr(fnt, "path", None)
+            if path:
+                cmap = TTFont(path, lazy=True, fontNumber=0).getBestCmap() or {}
+                return ord(ch) in cmap
+        except Exception:
+            pass
+        if fnt.getbbox(ch)[2] <= 0:
+            return False
+        def mask(c):
+            im = Image.new("L", (fnt.size * 3, fnt.size * 3))
+            ImageDraw.Draw(im).text((fnt.size // 2, fnt.size // 2), c, font=fnt, fill=255)
+            return im.tobytes()
+        try:
+            return mask(ch) != mask("\U000F0000")
+        except Exception:
+            return True
 
     def swatches(self, path):
         """One image of the palette with role, the guide's name and hex, for the owner to confirm by eye."""

@@ -97,6 +97,29 @@ def caption_events(B, W, idx, ot, total, key, fixes):
     return ev
 
 
+def hook_clear_of_face(B, src, segs, crop, hy, hh):
+    """Keep the hook off the speaker's face. If it would cover it, move it just below the face,
+    as long as it still clears the captions. Returns (y, note)."""
+    if B.shorts.get("hook", {}).get("y_fixed"):
+        return hy, None
+    try:
+        band = FACE.vertical_band(src, segs[0][0], segs[-1][1], samples=6, out_w=W_OUT, out_h=H_OUT, crop=crop)
+    except Exception:
+        band = None
+    if not band:
+        return hy, None
+    top, bot = band
+    if hy + hh + 20 <= top or hy >= bot + 20:
+        return hy, None
+    cy = int(B.shorts.get("captions", {}).get("y", 1400))
+    below = bot + 40
+    if below + hh <= cy - 180:
+        return below, "moved below the face"
+    if top - hh - 30 >= 40:
+        return top - hh - 30, "moved up, above the head"
+    return hy, "covers the face: there's no headroom in this shot"
+
+
 def render_short(B, src, W, runs, hook, out, sticker=None, key=(), crop=None, bed=None, sil=(), workdir=None,
                  sticker_idx=0):
     workdir = workdir or os.path.splitext(out)[0] + "_parts"
@@ -155,8 +178,10 @@ def render_short(B, src, W, runs, hook, out, sticker=None, key=(), crop=None, be
 
     hy = int(B.shorts.get("hook", {}).get("y", 150))
     hh = 0
+    moved = None
     if hook:
         hw, hh = B.hook(hook, os.path.join(workdir, "hook.png"))
+        hy, moved = hook_clear_of_face(B, src, segs, crop, hy, hh)
         add(os.path.join(workdir, "hook.png"), (W_OUT - hw) // 2, hy)
     st = B.shorts.get("sticker", {})
     if sticker and st.get("enabled"):
@@ -176,7 +201,7 @@ def render_short(B, src, W, runs, hook, out, sticker=None, key=(), crop=None, be
            "-c:v", "libx264", "-preset", "medium", "-crf", "21", "-maxrate", "6M", "-bufsize", "12M",
            "-r", "30", "-movflags", "+faststart", out])
     meta = {"out": out, "segments": segs, "duration": round(total_h, 2), "words": [W[i]["w"] for i in idx],
-            "crop": crop, "size_mb": round(os.path.getsize(out) / 1e6, 1)}
+            "crop": crop, "size_mb": round(os.path.getsize(out) / 1e6, 1), "hook_placement": moved}
     json.dump(meta, open(os.path.splitext(out)[0] + ".json", "w"), indent=1)
     return meta
 
@@ -212,6 +237,8 @@ def main(plan_path, only=None):
         m = render_short(B, src, W, s["runs"], s.get("hook"), out, sticker=sticker, key=s.get("key", []),
                          crop=crop, bed=bed if s.get("music", True) else None, sil=sil, sticker_idx=n)
         flag = "" if m["crop"].get("found", True) else "  (no face found: centred crop, check framing)"
+        if m.get("hook_placement"):
+            flag += f"  (hook {m['hook_placement']})"
         print(f"{s['id']}: {m['duration']} s, {m['size_mb']} MB{flag}")
 
 

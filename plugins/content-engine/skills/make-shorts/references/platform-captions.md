@@ -7,15 +7,16 @@ against `voice.banned_words` before showing it. Use their spelling (`business.sp
 ## The shape (all platforms)
 
 - **Line 1 picks up the hook**, it doesn't repeat it. It's what shows before "more".
-- **One idea, then one next step.** The free thing (`offers.free`) is the default next step for
-  people who don't know them yet. Never warm-only offers. Never retired offers (`never_mention`).
+- **One idea, then one next step.** Their chosen next step (`offers.cta`: a free download, starter
+  offer, call, website or simply "follow") is where people who don't know them yet go. Never warm-only offers. Never retired offers (`never_mention`).
 - **No urgency or scarcity** unless their voice rules say otherwise.
 - Write like they'd text a client, not like an ad.
 
 ## Instagram Reels
 
 - 1 to 4 short lines, a line break between thoughts.
-- Next step: "Link in bio for <free thing>" or a keyword to comment, if they run comment automations.
+- Next step: "Link in bio for <their next step>" or a keyword to comment, if they run comment automations.
+  If `offers.cta.type` is "follow", end with a reason to follow instead of a link.
 - 3 to 5 hashtags at the end: specific to the topic and their place (for example #smallbusinessperth).
   No banned or giant generic tags.
 
@@ -23,7 +24,7 @@ against `voice.banned_words` before showing it. Use their spelling (`business.sp
 
 - **Title:** under 70 characters, the searched question or the hook in sentence case. Searchable
   beats clever.
-- **Description:** two lines on what it answers, then the free thing with its full link, then
+- **Description:** two lines on what it answers, then their next step with its full link (skip it if they chose "follow"), then
   "Full video: <link>" if there's a long version. Add #Shorts and two topic hashtags.
 - Remind them once: links in Shorts descriptions don't click from the feed. A pinned comment helps.
 
