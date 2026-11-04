@@ -1,6 +1,6 @@
 {
   "name": "content-engine",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Starter (free): turn one talking-to-camera video into three short Reels and a 60-second story cut in your own brand and voice, with captions for each platform and a Ready to Post folder.",
   "author": {
     "name": "Zoë Condon, Z List Media",
@@ -14,5 +14,6 @@
     "captions",
     "content",
     "brand"
-  ]
+  ],
+  "license": "SEE LICENSE IN LICENSE.md"
 }
