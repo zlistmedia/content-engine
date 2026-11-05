@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Title and description live in page settings, not here. -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+@font-face{font-family:'ClashDisplay';src:url('https://assets.cdn.filesafe.space/YohTKZoMltZ1hb0a3TBT/media/68904c4671c40f3fe3e70960.woff2') format('woff2');font-weight:600 700;font-display:swap}
+@font-face{font-family:'Archivo';src:url('https://assets.cdn.filesafe.space/YohTKZoMltZ1hb0a3TBT/media/68904c625c0d73e5dd614962.woff2') format('woff2');font-weight:400 700;font-display:swap}
+
+/* ===== Z List Media link in bio. Every class starts with zlb- so Tekmatix styles don't clash. ===== */
+.zlb{--navy:#090446;--yellow:#FFFD98;--lav:#CB9CF2;--off:#F1F1F1;
+  --display:'ClashDisplay','Arial Black',sans-serif;--body:'Archivo',system-ui,-apple-system,sans-serif;--pixel:'Silkscreen',monospace;
+  background:var(--navy);color:var(--off);min-height:100vh;margin:0;padding:20px 20px 44px;
+  font-family:var(--body);-webkit-font-smoothing:antialiased;box-sizing:border-box}
+.zlb *{box-sizing:border-box}
+.zlb-wrap{max-width:440px;margin:0 auto}
+
+/* HUD strip */
+.zlb-hud{display:flex;justify-content:space-between;align-items:center;font-family:var(--pixel);font-size:13px;line-height:1;
+  letter-spacing:.04em;color:var(--lav);text-transform:uppercase;padding-bottom:12px;border-bottom:4px solid var(--lav)}
+.zlb-hud b{color:var(--yellow);font-weight:400}
+
+/* Photo with pixel sunnies */
+.zlb-photo{position:relative;height:340px;margin-top:22px;overflow:hidden;background:var(--lav);
+  border:4px solid var(--off);box-shadow:8px 8px 0 var(--lav)}
+/* The inner frame keeps the photo's own 2:3 shape, so the sunnies stay on your eyes at any screen width */
+.zlb-frame{position:absolute;left:0;width:100%;aspect-ratio:2/3;top:125px;margin-top:-38.55%}
+.zlb-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.zlb-sunnies{position:absolute;left:45.4%;top:24.6%;width:15.8%;height:auto;image-rendering:pixelated;
+  animation:zlb-drop .7s steps(7) .4s both}
+@keyframes zlb-drop{from{transform:translateY(-260%)}to{transform:translateY(0)}}
+.zlb-tagrow{position:absolute;left:12px;bottom:12px;display:flex;gap:8px}
+.zlb-level{display:inline-block;font-family:var(--pixel);font-size:12px;line-height:1;background:var(--lav);color:var(--navy);
+  padding:7px 9px;text-transform:uppercase;border:3px solid var(--navy)}
+.zlb-level--y{background:var(--yellow)}
+.zlb-name{font-family:var(--body);font-weight:600;font-size:14px;margin-top:18px;color:var(--off)}
+
+/* Title */
+.zlb-title{font-family:var(--display);font-weight:700;text-transform:uppercase;color:var(--yellow);
+  font-size:clamp(52px,15.5vw,70px);line-height:.88;letter-spacing:-.02em;margin:22px 0 0;text-shadow:5px 5px 0 var(--lav)}
+.zlb-lead{font-size:17px;line-height:1.45;font-weight:500;margin:20px 0 0;color:var(--off)}
+
+/* Buttons */
+.zlb-links{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:14px}
+.zlb-links li{position:relative}
+.zlb-btn{display:flex;align-items:center;gap:12px;width:100%;min-height:62px;padding:12px 20px;border-radius:54px;text-decoration:none;
+  background:var(--off);color:var(--navy);border:3px solid var(--off);font-family:var(--body);font-weight:700;font-size:16px;line-height:1.2;
+  box-shadow:4px 4px 0 var(--lav);transition:transform .12s}
+.zlb-btn:hover,.zlb-btn:focus-visible{transform:translate(-2px,-2px)}
+.zlb-btn:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.zlb-btn--lead{background:var(--yellow);border-color:var(--yellow)}
+.zlb-tag{font-family:var(--pixel);font-size:11px;line-height:1;flex:0 0 auto;background:var(--navy);color:var(--yellow);
+  padding:5px 7px;border-radius:16px;text-transform:uppercase}
+.zlb-txt{flex:1 1 auto}
+.zlb-price{font-family:var(--pixel);font-size:13px;flex:0 0 auto}
+.zlb-btn--locked{background:var(--navy);color:var(--lav);border-color:var(--lav);box-shadow:none;cursor:default;pointer-events:none}
+.zlb-btn--locked .zlb-tag{background:var(--lav);color:var(--navy)}
+
+/* Sticker */
+.zlb-sticker{position:absolute;right:-6px;top:-18px;z-index:2;transform:rotate(6deg);font-family:var(--pixel);font-size:12px;line-height:1;
+  text-transform:uppercase;background:var(--lav);color:var(--navy);padding:7px 9px;border:3px solid var(--navy);outline:3px solid var(--off)}
+
+/* Email */
+.zlb-foot{margin-top:36px;padding-top:18px;border-top:4px solid var(--lav)}
+.zlb-saved{display:block;font-family:var(--pixel);font-size:13px;color:var(--yellow);text-transform:uppercase;margin-bottom:12px}
+.zlb-btn--email{background:var(--navy);color:var(--yellow);border-color:var(--yellow);box-shadow:4px 4px 0 var(--yellow)}
+.zlb-btn--email .zlb-tag{background:var(--yellow);color:var(--navy)}
+
+@media (prefers-reduced-motion:reduce){.zlb-btn{transition:none}.zlb-sunnies{animation:none}}
+.zlb-btn--yt{background:var(--lav);border-color:var(--lav);box-shadow:4px 4px 0 var(--off)}
+.zlb-btn--yt .zlb-tag{background:var(--navy);color:var(--yellow)}
+</style>
+</head>
+<body style="margin:0">
+<main class="zlb">
+  <div class="zlb-wrap">
+
+    <div class="zlb-hud"><span>Z List Media</span><span>Level select <b>05</b></span></div>
+
+    <div class="zlb-photo">
+      <div class="zlb-frame">
+        <img src="https://assets.cdn.filesafe.space/YohTKZoMltZ1hb0a3TBT/media/69ca74f07985a420f1a47244.jpg" alt="Zoë Condon in pixel sunglasses, holding a cupcake">
+        <!-- Pixel sunnies. To nudge them: change left / top / width on .zlb-sunnies -->
+        <svg class="zlb-sunnies" viewBox="0 0 24 6" shape-rendering="crispEdges" aria-hidden="true">
+          <g fill="#090446">
+            <rect x="0" y="0" width="24" height="1"/>
+            <rect x="1" y="1" width="10" height="2"/><rect x="13" y="1" width="10" height="2"/>
+            <rect x="11" y="1" width="2" height="1"/>
+            <rect x="2" y="3" width="8" height="1"/><rect x="14" y="3" width="8" height="1"/>
+            <rect x="3" y="4" width="6" height="1"/><rect x="15" y="4" width="6" height="1"/>
+          </g>
+          <g fill="#F1F1F1">
+            <rect x="2" y="1" width="2" height="1"/><rect x="2" y="2" width="1" height="1"/>
+            <rect x="14" y="1" width="2" height="1"/><rect x="14" y="2" width="1" height="1"/>
+          </g>
+        </svg>
+      </div>
+      <div class="zlb-tagrow"><span class="zlb-level">Player one</span><span class="zlb-level zlb-level--y">Ready</span></div>
+    </div>
+
+    <div class="zlb-name">Zoë Condon · Z List Media · South West WA</div>
+
+    <h1 class="zlb-title">Choose<br>your level</h1>
+    <p class="zlb-lead">Your website, Google and socials, looked at as one. Pick where you want to start.</p>
+
+    <ul class="zlb-links">
+      <li>
+        <!-- CONTENT ENGINE: launched 5 Nov 2026 -->
+        <span class="zlb-sticker" aria-hidden="true">Just launched</span>
+        <a class="zlb-btn zlb-btn--lead" href="https://zlistmedia.com.au/content-engine?utm_source=instagram&utm_medium=bio&utm_content=ce-starter">
+          <span class="zlb-tag">New</span><span class="zlb-txt">Content Engine Starter</span><span class="zlb-price">Free</span>
+        </a>
+      </li>
+      <li>
+        <a class="zlb-btn zlb-btn--yt" href="https://zlistmedia.com.au/content-engine-full-week?utm_source=instagram&utm_medium=bio&utm_content=ce-boss">
+          <span class="zlb-tag">New</span><span class="zlb-txt">Content Engine Boss Level</span><span class="zlb-price">$297</span>
+        </a>
+      </li>
+      <li>
+        <!-- LATEST VIDEO: points at the channel's Videos tab, which always shows the newest video first. Never needs updating. -->
+        <a class="zlb-btn" href="https://www.youtube.com/@ZListMedia/videos">
+          <span class="zlb-tag">Watch</span><span class="zlb-txt">My latest video</span><span class="zlb-price">YouTube</span>
+        </a>
+      </li>
+      <li>
+        <a class="zlb-btn" href="https://zlistmedia.com.au/website-once-over-sales-page?utm_source=instagram&utm_medium=bio&utm_content=once-over">
+          <span class="zlb-tag">Lvl 01</span><span class="zlb-txt">Get a Once-Over</span><span class="zlb-price">$47</span>
+        </a>
+      </li>
+      <li>
+        <!-- 45 Minutes with Zoe: booking and payment in one -->
+        <a class="zlb-btn" href="https://api.leadconnectorhq.com/widget/booking/nSvLQGE4McLM1PqfOhMX?utm_source=instagram&utm_medium=bio&utm_content=45-min-call">
+          <span class="zlb-tag">Lvl 02</span><span class="zlb-txt">45 minutes with me</span><span class="zlb-price">$97</span>
+        </a>
+      </li>
+      <li>
+        <!-- TRIANGLE CHECK: live -->
+        <a class="zlb-btn" href="https://zlistmedia.com.au/digital-triangle?utm_source=instagram&utm_medium=bio&utm_content=triangle-check#triangle-check">
+          <span class="zlb-tag">Lvl 03</span><span class="zlb-txt">Take the Triangle Check</span><span class="zlb-price">Free</span>
+        </a>
+      </li>
+      <li>
+        <!-- 90-DAY DIGITAL STRATEGY: live 13 Oct 2026 -->
+        <a class="zlb-btn" href="https://zlistmedia.com.au/90-day-strategy?utm_source=instagram&utm_medium=bio&utm_content=90-day">
+          <span class="zlb-tag">Lvl 04</span><span class="zlb-txt">90-Day Digital Strategy</span><span class="zlb-price">Ask</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="zlb-foot">
+      <span class="zlb-saved">Game saved</span>
+      <a class="zlb-btn zlb-btn--email" href="https://zlistmedia.com.au/newsletter?utm_source=instagram&utm_medium=bio&utm_content=newsletter">
+        <span class="zlb-tag">Save</span><span class="zlb-txt">Get the weekly email</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+</body>
+</html>
