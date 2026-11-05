@@ -69,10 +69,11 @@ Claude's workspace and not on their computer, and roughly how big it is (the scr
 Ask "OK to install these?" and wait for a yes. Then run `setup_check.py --install`.
 
 `--install` also downloads the speech-to-text model (Whisper, MIT licence) from Z List Media's GitHub
-copy, which Claude's default settings allow, so there is nothing for them to change. Only if it
+copy on github.com, which Claude's default settings allow, so there is nothing for them to change. Only if it
 prints `"voice_model": "blocked"` (their account or organisation limits network access) give them the
-fix exactly as the script prints it (Settings, then Capabilities, allow raw.githubusercontent.com or
-"All domains", then a new chat), and carry on with the brand steps while they do it.
+fix exactly as the script prints it (turn on network access for package managers: Settings, then
+Capabilities on personal plans; Organization settings, then Capabilities for a Team or Enterprise
+owner; then a new chat), and carry on with the brand steps while they do it.
 
 This plugin runs in Claude. If they ask about ChatGPT or another AI app, say it isn't supported.
 
