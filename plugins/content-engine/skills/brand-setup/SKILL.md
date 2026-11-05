@@ -68,10 +68,11 @@ Run `setup_check.py`. If anything is missing, tell them in one message what it i
 Claude's workspace and not on their computer, and roughly how big it is (the script prints both).
 Ask "OK to install these?" and wait for a yes. Then run `setup_check.py --install`.
 
-If it prints `"voice_model": "blocked"`, the transcription model can't download because Claude's
-network settings block huggingface.co. Nobody works this out alone, so give them the fix exactly as
-the script prints it (Settings, then Capabilities, set the domain allowlist to "All domains" or add
-huggingface.co, then a new chat), and carry on with the brand steps while they do it.
+`--install` also downloads the speech-to-text model (Whisper, MIT licence) from Z List Media's GitHub
+copy, which Claude's default settings allow, so there is nothing for them to change. Only if it
+prints `"voice_model": "blocked"` (their account or organisation limits network access) give them the
+fix exactly as the script prints it (Settings, then Capabilities, allow raw.githubusercontent.com or
+"All domains", then a new chat), and carry on with the brand steps while they do it.
 
 This plugin runs in Claude. If they ask about ChatGPT or another AI app, say it isn't supported.
 

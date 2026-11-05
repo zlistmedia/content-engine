@@ -14,16 +14,10 @@ import numpy as np
 
 
 def transcribe(wav, model="small", threads=2):
-    from faster_whisper import WhisperModel
     w = wave.open(wav)
     a = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
-    try:
-        m = WhisperModel(model, device="cpu", compute_type="int8", cpu_threads=threads)
-    except Exception as e:
-        from setup_check import HF_FIX, model_access
-        if model_access(model) == "blocked":
-            raise SystemExit(HF_FIX)
-        raise
+    from voice_model import load
+    m = load(model, cpu_threads=threads)
     segs, info = m.transcribe(a, language="en", word_timestamps=True, vad_filter=False, beam_size=5)
     words = []
     for s in segs:

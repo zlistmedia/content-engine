@@ -18,26 +18,7 @@ WHAT = {
     "PIL": "draws captions, hooks and stickers in your fonts",
 }
 
-HF_FIX = ("The voice model can't download, because Claude's settings are blocking huggingface.co.\n"
-          "Fix (takes a minute): in Claude, open Settings, then Capabilities. Under code execution, set the\n"
-          "domain allowlist to \"All domains\" (or add huggingface.co). Then start a new chat and try again.")
-
-
-def model_access(model="small"):
-    """'cached' if the voice model is already here, 'ok' if it can download, 'blocked' if not."""
-    import glob, os, urllib.error, urllib.request
-    home = os.path.expanduser("~/.cache/huggingface/hub")
-    if glob.glob(os.path.join(home, f"models--Systran--faster-whisper-{model}", "snapshots", "*", "model.bin")):
-        return "cached"
-    try:
-        req = urllib.request.Request(f"https://huggingface.co/api/models/Systran/faster-whisper-{model}",
-                                     headers={"User-Agent": "content-engine"})
-        urllib.request.urlopen(req, timeout=12).read(64)
-        return "ok"
-    except urllib.error.HTTPError as e:
-        return "blocked" if e.code in (403, 407) else "ok"
-    except Exception:
-        return "blocked"
+from voice_model import HF_FIX, access as model_access, fetch as fetch_model
 
 
 def status():
@@ -76,6 +57,8 @@ if __name__ == "__main__":
         for m in missing:
             print(f"- {m}: {WHAT.get(m, '')}")
     if s.get("faster_whisper"):
+        if "--install" in sys.argv:
+            fetch_model()
         acc = model_access()
         print(json.dumps({"voice_model": acc}))
         if acc == "blocked":
