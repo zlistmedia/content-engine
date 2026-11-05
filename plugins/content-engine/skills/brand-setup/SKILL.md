@@ -57,8 +57,12 @@ Work out where it lives, in this order:
    or choose a folder called Content Engine and give access to it. If the request to open a folder is
    blocked or nothing happens, don't keep retrying: ask them to make a folder called Content Engine
    themselves (Documents is fine), then add it to this chat with the desktop app's folder button.
-2. **Google Drive**, if the Drive connector is on. Make the folders there.
-3. **Neither:** their home is a **Claude Project called "Content Engine"**, made in Step 7. Its files
+2. **Google Drive**, if the Drive connector is on. Make the folders there. Finished files can go
+   there, but raw videos usually can't come back from Drive on default settings (see
+   `getting-footage.md`), so a folder on their computer is still the better Inbox.
+3. **Neither:** their home is a **Claude Project called "Content Engine"**, made in Step 7. If they
+   have the desktop app, gently suggest route 1 instead: videos then go straight from a folder with
+   no upload and no size limit. Its files
    hold the brand profile, so every chat inside it starts with their brand. Videos go in as
    attachments, and finished content comes back as files.
 
@@ -209,10 +213,11 @@ straight after they approve the test clip, without being asked:
 > Your brand's set. Here's how to make content from now on:
 > 1. Film 5 to 10 minutes talking to camera about one question your clients ask.
 > 2. Open your **Content Engine** Project and start a new chat.
-> 3. Attach the video (or share its Google Drive link) and say "make my Shorts".
+> 3. Put the video in your Content Engine › Inbox folder (desktop app) and tell me which one, or attach it to the chat. Then say "make my Shorts".
 >
-> Big video? If it's over about 400MB and lives in Google Drive, download it to your computer first
-> and attach it from there, or send just the audio and a photo of you.
+> Before you film: set your camera to 1080p at 30 fps (iPhone: Settings › Camera › Record Video).
+> Phones film in 4K, which is too big to attach. Already filmed in 4K? Use the Inbox folder in the
+> desktop app (no size limit), or save a smaller 1080p copy and attach that.
 
 ## When they change something later
 

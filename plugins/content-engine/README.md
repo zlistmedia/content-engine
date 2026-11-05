@@ -14,7 +14,7 @@ Made by Zoë Condon, Z List Media.
   caption look and voice. It shows you a live preview of your Shorts as you go, then saves as one
   file for Claude. Have your colour codes and font files (.ttf or .otf) handy.
 - A video of you talking to camera: 5 to 10 minutes, face roughly in the middle, one speaker.
-- Google Drive (or the Claude desktop app linked to your computer) to get big videos to Claude.
+- The Claude desktop app, with your Content Engine folder added, is the easiest way to get videos in (no size limit). Attaching to the chat works up to 500 MB.
 
 ## Getting started
 

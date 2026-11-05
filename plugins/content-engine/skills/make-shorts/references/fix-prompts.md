@@ -11,9 +11,9 @@ happened and what you'll try next. The owner can paste any of the quoted lines t
 | "It starts mid-word" | Run starts too late | Start the run one word earlier. |
 | "I'm not in the frame" | Face-finding missed, or they moved | Check the contact sheet. Set `crop_x` for that Short in the plan (left edge of the crop, in source pixels), re-render. |
 | "There are two of us on camera" | Face-finding takes the biggest face, so the crop can land on the guest or between you | Ask who the Short is about. Set `crop_x` on their side, or pick moments where the crop can stay on one person. Skip a moment that needs both. |
-| "The file is too big to upload" | Over the 30 MB chat limit | `verify.py` already shrinks Shorts over 30 MB. For other files, split or use Drive. |
+| "The file is too big to upload" | Their raw video is 4K (over 500 MB), or it went into Project Files (30 MB) | Never ask them to film again. Use their Content Engine folder in the desktop app, or a smaller 1080p copy attached to the chat (`getting-footage.md`). Next time: camera at 1080p, 30 fps. |
 | "The music is too loud / I don't want music" | Profile music level | Change `look.shorts.music.level` (0.12 is soft) or set `mode` to `none`, save the profile, re-render. |
 | "That's not my font" | Wrong font file, or a variable font on the wrong weight | Check `fonts` in the profile, set `variation` ("Bold"), run `look_preview.py`. |
 | "The caption spelled my name wrong" | Whisper | Add it to `voice.spelling_fixes` in the profile (so it's right forever), fix `words.json`, re-render. |
 | "It's taking ages" | Long render | Say where it's up to. A Short takes about 2 minutes, transcription about a third of the video's length. Converting phone HDR footage takes about as long as the video. |
-| "The download link didn't work" | Drive file still Restricted | Walk them back through the share step in `getting-footage.md`. |
+| "The download link didn't work" | Drive file still Restricted, or Claude can't reach Google's download address | Check the share step in `getting-footage.md`. A network error or 403 means their settings block Drive: switch to the folder route, don't send them into settings. |
